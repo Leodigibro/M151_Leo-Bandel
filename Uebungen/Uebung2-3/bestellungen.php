@@ -1,56 +1,58 @@
-<?php 
+<?php
 $servername = "localhost";
 $username = "vmadmin";
 $password = "sml12345";
 $database = "northwind";
+
+$conn = null;
 
 try {
   $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
 
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   echo "Connected successfully";
-} 
-catch(PDOException $e) 
-{
+} catch(PDOException $e) {
   echo "Connection failed: " . $e->getMessage();
+  die();
 }
 
 $id = $_GET['id'];
 
 if (!$id) {
-    die('keine ID vorhanden');
+  die('Keine ID vorhanden');
 }
-
 ?>
+
 <h1>Bestellungen von <?= $id; ?></h1>
 
 <table>
-    <tr>
-        <th>Name</th>
-        <th>Lieferkosten</th>
-    </tr>
+  <tr>
+    <th>Name</th>
+    <th>Lieferkosten</th>
+    <th>Bestellung löschen</th>
+  </tr>
 
-    <?php
-        $sql = "SELECT * FROM orders WHERE customer_id = :id";
-        $statement = $conn->prepare($sql);
+<?php
+$sql = "SELECT * FROM orders WHERE customer_id = :id";
+$statement = $conn->prepare($sql);
 
-        $params = [
-            ':id' => $id
-        ];
+$params = [
+  ':id' => $id
+];
 
-        $statement->execute($params);
+$statement->execute($params);
 
-        $result = $statement->fetchAll();
+$result = $statement->fetchAll();
 
-        foreach ($result as $row) 
-        {
-            ?>
-            <tr>
-                <td><?= $row['ship_name']; ?></td>
-                <td><?= $row['shipping_fee']; ?></td>
-                <td><a href="delete.php">Bestellung löschen</a></td>
-            </tr>
-            <?php
-        }
-    ?>
+foreach ($result as $row) {
+  ?>
+  <tr>
+    <td><?= $row['ship_name']; ?></td>
+    <td><?= $row['shipping_fee']; ?></td>
+    <td><a href="delete.php?id=<?= $row['id'] ?>">Bestellung löschen</a></td>
+  </tr>
+  <?php
+}
+?>
 </table>
+<p><button><a href="index.php">Zurück zur Startseite</a></button></p>
