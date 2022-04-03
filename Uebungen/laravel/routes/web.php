@@ -18,7 +18,9 @@ Route::get('/', function () {
 });
 
 Route::get('/products', [\App\Http\Controllers\ProductController::class, 'list']);
-Route::get('/product/:id', [\App\Http\Controllers\ProductController::class, 'detail']);
+Route::get('/product/{id}', [\App\Http\Controllers\ProductController::class, 'detail']);
+Route::any('/Warenkorb/{id}', [\App\Http\Controllers\ProductController::class, 'Warenkorb']);
+Route::get('/Warenkorb', [\App\Http\Controllers\ProductController::class, 'ShowWarenkorb']);
 
 Route::post('/userlogin', [\App\Http\Controllers\UserController::class, 'login']);
 Route::post('/userregister', [\App\Http\Controllers\UserController::class, 'register']);

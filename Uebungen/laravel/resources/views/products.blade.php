@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <title>Products</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -24,10 +25,11 @@
         <tr>
             <td>{{$product->name}}</td>
             <td>{{$product->price}}</td>
-            <td><a href="/product/{{$product->id}}">Link</a></td>
+            <td><a href="/product/{{$product->id}}">Link to the product</a></td>
             <td><img width="100px" src="{{asset($product->image)}}"></td>
         </tr>
         @endforeach
     </table>
+    <a href="/Warenkorb">Hier geht es zum Warenkorb</a>
 </body>
 </html>
